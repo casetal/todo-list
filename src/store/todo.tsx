@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, reaction } from "mobx";
 import Item from '../interfaces/todo';
 
 class Todo {
@@ -6,6 +6,22 @@ class Todo {
 
     constructor() {
         makeAutoObservable(this);
+        this.loadFromLocalStorage();
+
+        reaction(
+            () => this.items,
+            (items) => {
+                localStorage.setItem('todoList', JSON.stringify(items));
+            }
+        );
+    }
+
+    private loadFromLocalStorage() {
+        const storedInputs = localStorage.getItem('todoList');
+
+        if (storedInputs) {
+            this.items = JSON.parse(storedInputs);
+        }
     }
 
     add(name: string, parentId: number = 0) {
@@ -44,7 +60,7 @@ class Todo {
         )
     }
 
-    get selectedItem(): Item {
+    get selected(): Item {
         return this.items.filter(i => i.selectView)[0];
     }
 }
