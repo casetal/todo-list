@@ -9,8 +9,8 @@ const TodoList = observer(({ parentId }: todoList) => {
             {todo.items.map(t => t.parentId === parentId ? (
                 <div key={t.id} className="item">
                     <input type="checkbox" />
-                    <button onClick={() => todo.selectItem(t.id)}>{t.name}</button>
-                    <button onClick={() => todo.removeTodo(t.id)}>Х</button>
+                    <button onClick={() => todo.select(t.id)}>{t.name}</button>
+                    <button onClick={() => todo.remove(t.id)}>Х</button>
 
                     <TodoList parentId={t.id} />
                 </div>

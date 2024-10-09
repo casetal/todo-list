@@ -8,7 +8,7 @@ class Todo {
         makeAutoObservable(this);
     }
 
-    addTodo(name: string, parentId: number = 0) {
+    add(name: string, parentId: number = 0) {
         this.items.push({
             id: Date.now(),
             name: name,
@@ -18,29 +18,21 @@ class Todo {
         });
     }
 
-    removeTodo(id: number) {
+    remove(id: number) {
         this.items = this.items.filter(i => i.id !== id);
     }
 
-    changeName(id: number, name: string) {
+    change(id: number, name: string, text: string) {
         this.items = this.items.map(i =>
             (i.id === id) ? {
                 ...i,
-                name: name
-            } : i
-        )
-    }
-
-    changeText(id: number, text: string) {
-        this.items = this.items.map(i =>
-            (i.id === id) ? {
-                ...i,
+                name: name,
                 text: text
             } : i
         )
     }
 
-    selectItem(id: number) {
+    select(id: number) {
         this.items = this.items.map(i =>
             (i.id === id) ? {
                 ...i,
@@ -50,8 +42,6 @@ class Todo {
                 selectView: false
             }
         )
-
-        console.log(this.items.filter(i => i.selectView === true));
     }
 
     get selectedItem(): Item {
