@@ -8,7 +8,7 @@ const App = () => {
   return (
     <Fragment>
       <AddTodo />
-      <TodoList />
+      <TodoList parentId={0} />
       <TodoInfo />
     </Fragment>
   )

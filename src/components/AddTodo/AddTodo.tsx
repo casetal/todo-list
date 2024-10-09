@@ -8,7 +8,7 @@ const AddTodo = observer(() => {
     return (
         <div className="addItem">
             <input type="text" placeholder="Название задачи" onChange={(e) => setName(e.target.value)} />
-            <button onClick={() => todo.addTodo(name as string)}>Добавить</button>
+            <button onClick={() => todo.addTodo(name as string, (todo.selectedItem ? todo.selectedItem.id: 0))}>Добавить</button>
         </div>
     )
 });

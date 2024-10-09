@@ -8,18 +8,18 @@ class Todo {
         makeAutoObservable(this);
     }
 
-    addTodo(name: string, text: string = "", parentId: number = 0) {
+    addTodo(name: string, parentId: number = 0) {
         this.items.push({
             id: Date.now(),
             name: name,
-            text: text,
+            text: "",
             parentId: parentId,
             selectView: false
         });
     }
 
     removeTodo(id: number) {
-        this.items = this.items.filter(i => i.id != id);
+        this.items = this.items.filter(i => i.id !== id);
     }
 
     changeName(id: number, name: string) {
