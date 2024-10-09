@@ -1,12 +1,5 @@
-import { makeAutoObservable } from "mobx"
-import internal from "stream";
-
-interface Item {
-    id: number;
-    name: string;
-    text: string;
-    parentId: number;
-}
+import { makeAutoObservable } from "mobx";
+import Item from '../interfaces/todo';
 
 class Todo {
     items: Array<Item> = [];
@@ -15,12 +8,13 @@ class Todo {
         makeAutoObservable(this);
     }
 
-    addTodo(id: number, name: string, text: string, parentId: number) {
+    addTodo(name: string, text: string = "", parentId: number = 0, selectView: boolean = false) {
         this.items.push({
-            id: id,
+            id: Date.now(),
             name: name,
             text: text,
-            parentId: parentId
+            parentId: parentId,
+            selectView: selectView
         });
     }
 
@@ -30,11 +24,29 @@ class Todo {
 
     changeTodo(id: number, name: string, text: string) {
         this.items.map(i =>
-            (i.id === id) ? {
+            (i.id == id) ? {
                 ...i,
                 name: name,
                 text: text
             } : i
         )
     }
+
+    selectItem(id: number) {
+        this.items.map(i =>
+            (i.id == id) ? {
+                ...i,
+                selectView: true
+            } : {
+                ...i,
+                selectView: false
+            }
+        )
+    }
+
+    get selectedItem(): Array<Item> {
+        return this.items.filter(i => i.selectView === true);
+    }
 }
+
+export default new Todo();
