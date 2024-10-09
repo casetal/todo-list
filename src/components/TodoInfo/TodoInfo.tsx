@@ -11,9 +11,8 @@ const App = observer(() => {
             {todo.selectedItem ? (
                 <>
                 <h1>{todo.selectedItem.id}</h1>
-                    <input type="text" onChange={(e) => setName(e.target.value)} defaultValue={todo.selectedItem.name} />
-                    <textarea onChange={(e) => setText(e.target.value)} defaultValue={todo.selectedItem.text} />
-                    <button onClick={() => todo.changeTodo(todo.selectedItem.id, name as string, text as string)}>Сохранить</button>
+                    <input type="text" onChange={(e) => todo.changeName(todo.selectedItem.id, e.target.value)} value={todo.selectedItem.name} />
+                    <textarea onChange={(e) => todo.changeText(todo.selectedItem.id, e.target.value)} value={todo.selectedItem.text} />
                 </>
             ) : null}
         </div>

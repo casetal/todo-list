@@ -22,11 +22,19 @@ class Todo {
         this.items = this.items.filter(i => i.id != id);
     }
 
-    changeTodo(id: number, name: string, text: string) {
+    changeName(id: number, name: string) {
         this.items = this.items.map(i =>
             (i.id === id) ? {
                 ...i,
-                name: name,
+                name: name
+            } : i
+        )
+    }
+
+    changeText(id: number, text: string) {
+        this.items = this.items.map(i =>
+            (i.id === id) ? {
+                ...i,
                 text: text
             } : i
         )
