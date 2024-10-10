@@ -35,7 +35,7 @@ class Todo {
     }
 
     remove(id: number) {
-        this.items = this.items.filter(i => i.id !== id);
+        this.items = this.items.filter(i => i.id !== id || i.parentId == id);
     }
 
     change(id: number, name: string, text: string) {
