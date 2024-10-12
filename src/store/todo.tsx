@@ -22,16 +22,68 @@ class Todo {
         if (storedInputs) {
             this.items = JSON.parse(storedInputs);
         }
+
+        this.select(0);
+    }
+
+    checked(id: number, checked: boolean) {
+        this.items = this.items.map(i =>
+            (i.id === id) ? {
+                ...i,
+                checked: !checked
+            } : i
+        )
+
+        this.checkedChildren(id);
+        this.checkedParent(id);
+    }
+
+    private checkedChildren(id: number) {
+        this.items = this.items.map(i =>
+            (i.parentId === id) ? {
+                ...i,
+                checked: !i.checked
+            } : i
+        )
+
+        this.items.map(i => i.parentId === id && this.checkedChildren(i.id));        
+    }
+
+    private checkedParent(id: number) {
+        if(id === 0) {
+            return;
+        }
+
+        let parentId: number = this.items.reduce((pv, cv) => (id == cv.id) ? cv.parentId : pv, 0);
+
+        const getAllChild: Array<Item> = this.items.filter(i => i.parentId === parentId);
+        const getAllChildChecked: Array<Item> = this.items.filter(i => (i.parentId === parentId && i.checked));
+
+        const allChildChecked = getAllChild.length === getAllChildChecked.length;
+
+        this.items = this.items.map(i =>
+            (i.id === parentId) ? {
+                ...i,
+                checked: allChildChecked
+            } : i
+        );
+
+        this.checkedParent(parentId);
     }
 
     add(name: string, parentId: number = 0) {
+        const id = Date.now();
+
         this.items.push({
-            id: Date.now(),
+            id: id,
             name: name,
             text: "",
             parentId: parentId,
+            checked: false,
             selectView: false
         });
+
+        this.checked(id, true)
     }
 
     remove(id: number) {

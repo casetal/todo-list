@@ -3,5 +3,6 @@ export default interface Item {
     name: string;
     text: string;
     parentId: number;
-    selectView: boolean
+    checked: boolean;
+    selectView: boolean,
 }
