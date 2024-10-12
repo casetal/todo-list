@@ -34,19 +34,19 @@ class Todo {
             } : i
         )
 
-        this.checkedChildren(id);
+        this.checkedChildren(id, !checked);
         this.checkedParent(id);
     }
 
-    private checkedChildren(id: number) {
+    private checkedChildren(id: number, checked: boolean) {
         this.items = this.items.map(i =>
             (i.parentId === id) ? {
                 ...i,
-                checked: !i.checked
+                checked: checked
             } : i
         )
 
-        this.items.map(i => i.parentId === id && this.checkedChildren(i.id));        
+        this.items.map(i => i.parentId === id && this.checkedChildren(i.id, i.checked));        
     }
 
     private checkedParent(id: number) {
