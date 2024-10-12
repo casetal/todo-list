@@ -1,4 +1,4 @@
-import { makeAutoObservable, autorun } from "mobx";
+import { makeAutoObservable, reaction } from "mobx";
 
 class Theme {
     private themes = {
@@ -26,48 +26,38 @@ class Theme {
     constructor() {
         makeAutoObservable(this);
 
-        autorun(() => {
-            
-        })
-
         let theme = localStorage.getItem('theme');
         this.selectTheme = theme ? theme : 'light';
-        this.set(this.selectTheme);
-        
-        this.initSystemThemeWatcher();
+        this.change(this.selectTheme);
+        console.log(theme);
+        this.onChange();
     }
 
-    private change(theme: string) {
+    change(theme: string) {
         if (theme === 'light')
             this.currentTheme = this.themes.LIGHT;
         else if (theme === 'dark')
             this.currentTheme = this.themes.DARK;
-    }
-
-    set(theme: string) {
-        this.selectTheme = theme;
-        localStorage.setItem("theme", this.selectTheme) 
-        
-
-        if (theme === 'system') {
-            const matchMediaDark = window.matchMedia('(prefers-color-scheme: dark)');
-            this.change(matchMediaDark.matches ? 'dark' : 'light');
-        } else {
-            this.change(theme);
+        else if (theme === 'system') {
+            this.change(this.matchMedia.matches ? 'dark' : 'light');
+            this.selectTheme = 'system';
         }
+
+        localStorage.setItem("theme", this.selectTheme);
     }
 
-    private initSystemThemeWatcher() {
-        const matchMediaDark = window.matchMedia('(prefers-color-scheme: dark)');
-        
-        const onSystemThemeChange = (e: MediaQueryListEvent) => {
+    onChange = () => {
+        this.matchMedia.addEventListener('change', (e: MediaQueryListEvent) => {
             if (this.selectTheme === 'system') {
                 this.change(e.matches ? 'dark' : 'light');
+                this.selectTheme = 'system';
             }
-        };
-        
-        matchMediaDark.addEventListener('change', onSystemThemeChange);
+
+            console.log(this.selectTheme);
+        });
     }
+
+    private matchMedia = window.matchMedia('(prefers-color-scheme: dark)');
 }
 
 export default new Theme();
