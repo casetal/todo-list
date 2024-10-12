@@ -4,6 +4,7 @@ import AddTodo from '../AddTodo/AddTodo';
 import TodoInfo from '../TodoInfo/TodoInfo';
 import ControlList from '../ControlList/ControlList';
 import ChangeTheme from '../ChangeTheme/ChangeTheme';
+import Search from '../Search/Search';
 
 import todo from '../../store/todo';
 import theme from '../../store/theme';
@@ -20,6 +21,7 @@ const App = observer(() => {
           <div className={`flex gap-5 mt-5 ${theme.currentTheme.background}`}>
             <div className="w-1/3">
               {/* <div className="h-1/2 overflow-y-auto"> */}
+              <Search />
               <TodoList parentId={0} />
               <ControlList />
               {/* </div> */}

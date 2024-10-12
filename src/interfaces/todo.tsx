@@ -4,4 +4,5 @@ export default interface Item {
     text: string;
     parentId: number;
     checked: boolean;
+    visible: boolean
 }

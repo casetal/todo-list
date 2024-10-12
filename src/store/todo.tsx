@@ -69,6 +69,38 @@ class Todo {
         this.checkedParent(parentId);
     }
 
+
+    search(name: string) {
+        let foundIds: Array<number> = [];
+    
+        this.items.forEach(i => {
+            if (i.name.toLowerCase().includes(name.toLowerCase())) {
+                let currentId = i.id;
+                if (!foundIds.includes(currentId)) foundIds.push(currentId);
+    
+                let parentId: number = i.parentId;
+                while (parentId && !foundIds.includes(parentId)) {
+                    foundIds.push(parentId);
+                    const foundParentId = this.items.find(item => item.id === parentId);
+                    parentId = foundParentId ? foundParentId.parentId : 0;
+                }
+            }
+        });
+    
+        foundIds.forEach(parentId => {
+            this.items.forEach(i => {
+                if (i.parentId === parentId && !foundIds.includes(i.id)) {
+                    foundIds.push(i.id);
+                }
+            });
+        });
+    
+        this.items = this.items.map(i => ({
+            ...i,
+            visible: foundIds.includes(i.id)
+        }));
+    }
+
     add(name: string, parentId: number = 0) {
         const id = Date.now();
 
@@ -77,7 +109,8 @@ class Todo {
             name: name,
             text: "",
             parentId: parentId,
-            checked: false
+            checked: false,
+            visible: true
         });
 
         this.check(id, true)
