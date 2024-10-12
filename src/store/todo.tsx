@@ -26,7 +26,7 @@ class Todo {
         this.select(0);
     }
 
-    checked(id: number, checked: boolean) {
+    check(id: number, checked: boolean) {
         this.items = this.items.map(i =>
             (i.id === id) ? {
                 ...i,
@@ -83,11 +83,15 @@ class Todo {
             selectView: false
         });
 
-        this.checked(id, true)
+        this.check(id, true)
     }
 
     remove(id: number) {
         this.items = this.items.filter(i => i.id !== id || i.parentId == id);
+    }
+
+    removeChecked() {
+        this.items = this.items.filter(i => !i.checked);
     }
 
     change(id: number, name: string, text: string) {
@@ -114,6 +118,10 @@ class Todo {
 
     get selected(): Item {
         return this.items.filter(i => i.selectView)[0];
+    }
+
+    get checked(): number {
+        return this.items.filter(i => i.checked).length;
     }
 }
 

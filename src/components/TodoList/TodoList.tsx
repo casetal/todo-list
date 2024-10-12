@@ -6,11 +6,11 @@ const TodoList = observer(({ parentId }: todoList) => {
     return (
         <>
             {todo.items.map(t => t.parentId === parentId ? (
-                <ul key={t.id} className={t.parentId != 0 ? 'ml-4' : ''}>
-                    <li onClick={() => todo.select(t.id)} className={`cursor-pointer items-center mb-2 p-2 border rounded hover:bg-gray-200 transition${t.selectView == true ? ' bg-gray-200' : ' bg-gray-100'}${t.checked == true ? ' bg-gray-300' : ' bg-gray-100'}`}>
+                <ul key={t.id} className={t.parentId != 0 ? 'ml-5' : ''}>
+                    <li onClick={() => todo.select(t.id)} className={`cursor-pointer items-center mb-2 p-2 border rounded hover:bg-gray-200 transition${t.checked == true ? ' bg-gray-300' : ' bg-gray-100'}`}>
                         <div className="flex">
-                            <input type="checkbox" onChange={() => todo.checked(t.id, t.checked)} checked={t.checked} className="mr-2" />
-                            <div className="flex-1 text-left" >
+                            <input type="checkbox" onChange={() => todo.check(t.id, t.checked)} checked={t.checked} className="mr-2" />
+                            <div className={`flex-1 text-left${t.selectView == true ? ' font-semibold' : ' font-normal'}`} >
                                 {t.name ? t.name : "Без названия"}
                             </div>
                             <div onClick={() => todo.add("", t.id)} className="ml-2 text-green-600">
