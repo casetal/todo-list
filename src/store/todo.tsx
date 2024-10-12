@@ -7,6 +7,7 @@ class Todo {
     constructor() {
         makeAutoObservable(this);
         this.loadFromLocalStorage();
+        this.search('');
 
         reaction(
             () => this.items,
