@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 import { observer } from 'mobx-react-lite';
 import todo from '../../store/todo';
 import { List } from '../../interfaces/todoList';
@@ -9,7 +7,7 @@ const TodoList = observer(({ parentId }: List) => {
         <>
             {todo.items.map(t => t.parentId === parentId ? (
                 <div key={t.id} className={t.parentId != 0 ? 'ml-5' : ''}>
-                    <Link to={`/${t.id}`} className={`block cursor-pointer items-center mb-2 p-2 border rounded hover:bg-gray-200 transition${t.checked == true ? ' bg-gray-300' : ' bg-gray-100'}`}>
+                    <a href={`/${t.id}`} className={`block cursor-pointer items-center mb-2 p-2 border rounded hover:bg-gray-200 transition${t.checked == true ? ' bg-gray-300' : ' bg-gray-100'}`}>
                         <div className="flex">
                             <input type="checkbox" onChange={() => todo.check(t.id, t.checked)} checked={t.checked} className="mr-2" />
                             <div className={`flex-1 text-left`} >
@@ -27,7 +25,7 @@ const TodoList = observer(({ parentId }: List) => {
                                 </svg>
                             </div>
                         </div>
-                    </Link>
+                    </a>
                     <TodoList parentId={t.id} />
                 </div>
             ) : null)}
