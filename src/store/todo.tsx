@@ -22,8 +22,6 @@ class Todo {
         if (storedInputs) {
             this.items = JSON.parse(storedInputs);
         }
-
-        this.select(0);
     }
 
     check(id: number, checked: boolean) {
@@ -79,8 +77,7 @@ class Todo {
             name: name,
             text: "",
             parentId: parentId,
-            checked: false,
-            selectView: false
+            checked: false
         });
 
         this.check(id, true)
@@ -102,22 +99,6 @@ class Todo {
                 text: text
             } : i
         )
-    }
-
-    select(id: number) {
-        this.items = this.items.map(i =>
-            (i.id === id) ? {
-                ...i,
-                selectView: true
-            } : {
-                ...i,
-                selectView: false
-            }
-        )
-    }
-
-    get selected(): Item {
-        return this.items.filter(i => i.selectView)[0];
     }
 
     get checked(): number {

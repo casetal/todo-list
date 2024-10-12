@@ -4,5 +4,4 @@ export default interface Item {
     text: string;
     parentId: number;
     checked: boolean;
-    selectView: boolean,
 }
