@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import todo from '../../store/todo';
+import theme from '../../store/theme';
 
 const AddTodo = observer(() => {
     const [name, setName] = useState<string>('');
@@ -11,14 +12,14 @@ const AddTodo = observer(() => {
     }
 
     return (
-        <div className="flex items-center gap-4 p-4 bg-white rounded shadow-md mx-auto">
+        <div className={`flex items-center gap-4 p-4 rounded shadow-md mx-auto ${theme.currentTheme.backgroundBlock}`}>
             <input
                 type="text"
                 placeholder="Введите название задачи..."
                 onChange={(e) => setName(e.target.value)}
                 onKeyUp={(e) => e.key == "Enter" && handleAdd()}
                 value={name}
-                className="flex-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-300"
+                className={`${theme.currentTheme.input} flex-1 p-2 rounded focus:outline-none`}
             />
             <button
                 onClick={handleAdd}

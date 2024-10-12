@@ -1,15 +1,17 @@
 import { observer } from 'mobx-react-lite';
 import todo from '../../store/todo';
-import { List } from '../../interfaces/todoList';
+import List from '../../interfaces/todoList';
+import theme from '../../store/theme';
 
 const TodoList = observer(({ parentId }: List) => {
     return (
         <>
             {todo.items.map(t => t.parentId === parentId ? (
                 <div key={t.id} className={t.parentId != 0 ? 'ml-5' : ''}>
-                    <a href={`/${t.id}`} className={`block cursor-pointer items-center mb-2 p-2 border rounded hover:bg-gray-200 transition${t.checked == true ? ' bg-gray-300' : ' bg-gray-100'}`}>
+                    <a href={`/${t.id}`} className={`block cursor-pointer items-center mb-2 p-2 rounded transition ${t.checked == true ? theme.currentTheme.taskSelect : theme.currentTheme.task}`}>
                         <div className="flex">
                             <input type="checkbox" onChange={() => todo.check(t.id, t.checked)} checked={t.checked} className="mr-2" />
+                            
                             <div className={`flex-1 text-left`} >
                                 {t.name ? t.name : "Без названия"}
                             </div>
