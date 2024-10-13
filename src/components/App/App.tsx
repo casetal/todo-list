@@ -15,7 +15,7 @@ import { observer } from 'mobx-react-lite';
 const App = observer(() => {
   return (
     <HashRouter basename={process.env.PUBLIC_URL}>
-      <div className={`h-screen ${theme.currentTheme.background}`}>
+      <div className={`min-h-screen ${theme.currentTheme.background}`}>
         <div className="container mx-auto py-10 max-w-full lg:max-w-6xl">
           <AddTodo />
           <div className={`flex flex-col lg:flex-row gap-5 mt-5 ${theme.currentTheme.background}`}>

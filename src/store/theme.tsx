@@ -34,6 +34,8 @@ class Theme {
     }
 
     change(theme: string) {
+        this.selectTheme = theme;
+
         if (theme === 'light')
             this.currentTheme = this.themes.LIGHT;
         else if (theme === 'dark')
